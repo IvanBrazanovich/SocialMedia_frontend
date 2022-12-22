@@ -1,0 +1,15 @@
+@use "../../index.scss" as *;
+
+.auth_container {
+  width: 20rem;
+  margin: 10rem auto 2rem;
+  box-shadow: 1px 0 3px 1px rgba(0 0 0 /0.1);
+  padding: 2rem 1rem;
+  background-color: white;
+  border-radius: $rounded_md;
+
+  h1 {
+    color: $primaryColor;
+    text-align: center;
+  }
+}
