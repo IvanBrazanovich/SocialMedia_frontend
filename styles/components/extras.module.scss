@@ -1,0 +1,9 @@
+@use "../index.scss" as *;
+
+.alert {
+  background-color: $redBase;
+  padding: 0.5rem 0;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+}

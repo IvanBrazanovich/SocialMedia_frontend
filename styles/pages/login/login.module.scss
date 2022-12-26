@@ -1,15 +1,77 @@
 @use "../../index.scss" as *;
 
-.auth_container {
-  width: 20rem;
-  margin: 10rem auto 2rem;
-  box-shadow: 1px 0 3px 1px rgba(0 0 0 /0.1);
-  padding: 2rem 1rem;
-  background-color: white;
-  border-radius: $rounded_md;
+.auth__container {
+  margin: 5rem auto 2rem;
+
+  @include mediaChange(sm) {
+    width: 70%;
+  }
+
+  @include mediaChange(md) {
+    width: 50%;
+  }
+  @include mediaChange(lg) {
+    width: 30rem;
+  }
 
   h1 {
     color: $primaryColor;
     text-align: center;
+    margin: 1rem 0;
+  }
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 1px 0 3px 1px rgba(0 0 0 /0.1);
+  padding: 3rem 1rem;
+  margin-bottom: 2rem;
+
+  border-radius: $rounded_md;
+  gap: 2rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-weight: 600;
+    }
+
+    input {
+      padding: 0.6rem;
+      border-radius: $rounded_md;
+      border: none;
+      background-color: $grayLighter;
+    }
+  }
+}
+
+.auth__button {
+  padding: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: white;
+  background-color: $primaryColor;
+  border: none;
+
+  border-radius: $rounded-md;
+  cursor: pointer;
+}
+
+.auth__links {
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: $grayBase;
+    font-size: 0.9rem;
   }
 }
