@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const initialState = {
   alert: {},
   user: {},
+  validToken: false,
 };
 
 export const createUser = createAsyncThunk(
@@ -97,6 +98,87 @@ export const confirmAccount = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  "Usuarios/forgetPassword",
+  async function (email, { dispatch }) {
+    const resOne = await fetch(
+      `http://localhost:4000/api/usuarios/forget-password`,
+      {
+        method: "POST",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const resTwo = await resOne.json();
+
+    dispatch(
+      setAlert({
+        msg: resTwo.msg,
+        error: resOne.status !== 200,
+      })
+    );
+  }
+);
+
+export const confirmToken = createAsyncThunk(
+  "Usuarios/confirmToken",
+  async function (token, { dispatch }) {
+    const resOne = await fetch(
+      `http://localhost:4000/api/usuarios/forget-password/${token}`
+    );
+
+    const resTwo = await resOne.json();
+
+    if (resOne.status !== 403) {
+      return { valid: true };
+    } else {
+      dispatch(
+        setAlert({
+          msg: resTwo.msg,
+          error: true,
+        })
+      );
+      throw new Error("Not allowed");
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "Usuarios/changePassword",
+  async function (data, { dispatch }) {
+    const { password, token, navigate } = data;
+
+    const resOne = await fetch(
+      `http://localhost:4000/api/usuarios/change-password/${token}`,
+      {
+        method: "POST",
+        body: JSON.stringify({ password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const resTwo = await resOne.json();
+
+    dispatch(
+      setAlert({
+        msg: resTwo.msg,
+        error: resOne.status !== 200,
+      })
+    );
+
+    dispatch(closeAlert());
+
+    setTimeout(() => {
+      navigate("/");
+    }, 3000);
+  }
+);
+
 export const usuariosSlice = createSlice({
   name: "Usuarios",
   initialState,
@@ -118,6 +200,11 @@ export const usuariosSlice = createSlice({
     });
     builder.addCase(authenticateUser.fulfilled, (state, action) => {
       state.user = action.payload;
+    });
+    builder.addCase(confirmToken.fulfilled, (state, action) => {
+      if (action.payload.valid) {
+        state.validToken = true;
+      }
     });
   },
 });
