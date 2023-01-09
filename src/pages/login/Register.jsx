@@ -1,9 +1,13 @@
 import React from "react";
 import styles from "../../../styles/pages/login/login.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAlert } from "../../features/usuarios/usuariosSlice";
+import {
+  setAlert,
+  closeAlert,
+  createUser,
+} from "../../features/usuarios/usuariosSlice";
 import Alert from "../../components/Alert";
 
 const Register = () => {
@@ -12,6 +16,9 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secondPassword, setSecondPassword] = useState("");
+
+  //React Redux
+  const navigate = useNavigate();
 
   // REDUX
   const dispatch = useDispatch();
@@ -32,7 +39,23 @@ const Register = () => {
           error: true,
         })
       );
+      dispatch(closeAlert());
+
+      return;
     }
+
+    if (password !== secondPassword) {
+      dispatch(
+        setAlert({
+          msg: "Las contraseñas no son iguales",
+          error: true,
+        })
+      );
+      return;
+    }
+
+    //Crear usuario
+    dispatch(createUser({ usuario: { name, email, password }, navigate }));
   };
 
   return (

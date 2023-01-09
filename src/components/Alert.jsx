@@ -7,7 +7,15 @@ const Alert = () => {
 
   if (!alert.msg) return;
 
-  return <div className={styles.alert}>{alert.msg}</div>;
+  return (
+    <div
+      className={`${styles.alert} ${
+        alert.error ? `${styles.red}` : `${styles.blue}`
+      }`}
+    >
+      {alert.msg}
+    </div>
+  );
 };
 
 export default Alert;
