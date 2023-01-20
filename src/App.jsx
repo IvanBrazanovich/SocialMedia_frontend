@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LayoutAuth from "./layout/LayoutAuth";
+import ProtectedRoute from "./pages/app/ProtectedRoute";
 import ChangePassword from "./pages/login/ChangePassword";
 import ConfirmAccount from "./pages/login/ConfirmAccount";
 import ForgotPassword from "./pages/login/ForgotPassword";
@@ -11,6 +12,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
+          {/* Login */}
           <Route path="/" element={<LayoutAuth />}>
             <Route index element={<Login />} />
             <Route path="confirm/:token" element={<ConfirmAccount />} />
@@ -18,6 +20,10 @@ function App() {
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="change-password/:token" element={<ChangePassword />} />
           </Route>
+
+          {/* App */}
+
+          <Route path="/app" element={<ProtectedRoute />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

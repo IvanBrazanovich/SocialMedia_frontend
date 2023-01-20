@@ -5,6 +5,8 @@ const initialState = {
   alert: {},
   user: {},
   validToken: false,
+  loading: true,
+  auth: {},
 };
 
 export const createUser = createAsyncThunk(
@@ -95,6 +97,7 @@ export const confirmAccount = createAsyncThunk(
         error: resOne.status !== 200,
       })
     );
+    dispatch(closeAlert());
   }
 );
 
@@ -120,6 +123,7 @@ export const forgotPassword = createAsyncThunk(
         error: resOne.status !== 200,
       })
     );
+    dispatch(closeAlert());
   }
 );
 
@@ -141,6 +145,7 @@ export const confirmToken = createAsyncThunk(
           error: true,
         })
       );
+      dispatch(closeAlert());
       throw new Error("Not allowed");
     }
   }
@@ -179,12 +184,41 @@ export const changePassword = createAsyncThunk(
   }
 );
 
+export const checkAuth = createAsyncThunk(
+  "Usuarios/checkAuth",
+  async function (navigate, { dispatch }) {
+    dispatch(setLoading());
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    const resOne = await fetch(`http://localhost:4000/api/usuarios/perfil`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    const resTwo = await resOne.json();
+
+    if (resOne.status === 404) {
+      const error = new Error("Don't have access");
+
+      return res.status(400).json({ msg: error.message });
+    }
+
+    return resTwo;
+  }
+);
+
 export const usuariosSlice = createSlice({
   name: "Usuarios",
   initialState,
   reducers: {
     setAlert: (state, action) => {
       state.alert = action.payload;
+    },
+    setLoading: (state, action) => {
+      state.loading = true;
     },
   },
   extraReducers(builder) {
@@ -200,15 +234,25 @@ export const usuariosSlice = createSlice({
     });
     builder.addCase(authenticateUser.fulfilled, (state, action) => {
       state.user = action.payload;
+      localStorage.setItem("token", JSON.stringify(action.payload.token));
     });
     builder.addCase(confirmToken.fulfilled, (state, action) => {
       if (action.payload.valid) {
         state.validToken = true;
       }
     });
+    builder.addCase(checkAuth.fulfilled, (state, action) => {
+      state.auth = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(checkAuth.rejected, (state, action) => {
+      state.auth = {};
+      state.loading = false;
+      console.log("hola");
+    });
   },
 });
 
-export const { setAlert } = usuariosSlice.actions;
+export const { setAlert, setLoading } = usuariosSlice.actions;
 
 export default usuariosSlice.reducer;
