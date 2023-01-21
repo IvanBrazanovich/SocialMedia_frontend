@@ -1,7 +1,7 @@
 import React from "react";
 
-const Home = () => {
-  return <div>Home</div>;
+const Feed = () => {
+  return <div>Feed</div>;
 };
 
-export default Home;
+export default Feed;

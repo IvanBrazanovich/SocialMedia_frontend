@@ -5,6 +5,7 @@ import styles from "../../../styles/pages/app/layout.module.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "../../features/usuarios/usuariosSlice";
+import Footer from "./Footer";
 
 const ProtectedRoute = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ const ProtectedRoute = () => {
           <Header />
 
           <Outlet />
+
+          <Footer />
         </>
       ) : (
         <Navigate to="/" />

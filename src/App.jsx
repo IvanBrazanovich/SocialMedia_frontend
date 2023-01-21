@@ -1,5 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LayoutAuth from "./layout/LayoutAuth";
+import AddPost from "./pages/app/AddPost";
+import Explore from "./pages/app/Explore";
+import Feed from "./pages/app/Feed";
+import Profile from "./pages/app/Profile";
 import ProtectedRoute from "./pages/app/ProtectedRoute";
 import ChangePassword from "./pages/login/ChangePassword";
 import ConfirmAccount from "./pages/login/ConfirmAccount";
@@ -23,7 +27,12 @@ function App() {
 
           {/* App */}
 
-          <Route path="/app" element={<ProtectedRoute />}></Route>
+          <Route path="/app" element={<ProtectedRoute />}>
+            <Route index element={<Feed />} />
+            <Route path="explore" element={<Explore />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="add-post" element={<AddPost />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

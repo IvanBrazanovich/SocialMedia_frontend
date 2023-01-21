@@ -1,7 +1,7 @@
 @use "../../index.scss" as *;
 
 .main__layout {
-  background-color: $grayBase;
   width: 30rem;
+  position: relative;
   margin: 0 auto;
 }

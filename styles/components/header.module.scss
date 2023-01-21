@@ -1,0 +1,24 @@
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+
+  div {
+    width: 2rem;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  a {
+    background-color: transparent;
+    border: none;
+
+    cursor: pointer;
+    svg {
+      width: 2rem;
+    }
+  }
+}
