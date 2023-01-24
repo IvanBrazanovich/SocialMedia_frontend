@@ -1,0 +1,29 @@
+@use "../index.scss" as *;
+
+.form {
+  padding: 1rem;
+
+  div {
+    padding: 0.5rem 1rem;
+    display: flex;
+    background-color: $grayLighter;
+    border-radius: $rounded_sm;
+    gap: 1rem;
+
+    svg {
+      width: 1.5rem;
+    }
+
+    input {
+      border: none;
+      background-color: $grayLighter;
+      display: block;
+      width: 100%;
+
+      &:focus-visible {
+        border: none;
+        outline: none !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@use "../index.scss" as *;
+
+.post__form {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 2rem 1rem;
+
+  div {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+
+    label[type="inputfile"] {
+      border: 1px solid $grayLight;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 1rem;
+
+      svg {
+        height: 2rem;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+    }
+
+    label {
+      font-size: 1.4rem;
+      color: $textColor;
+      font-weight: 700;
+    }
+
+    textarea {
+      border: none;
+      outline: none;
+      font-family: inherit;
+    }
+  }
+
+  button {
+    padding: 1rem 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.2rem;
+    font-family: inherit;
+    border: none;
+    color: white;
+    background-color: $primaryColorLight;
+    cursor: pointer;
+  }
+}
+
+.divWrapper__imagePreview {
+  img {
+    width: 100%;
+  }
+}
